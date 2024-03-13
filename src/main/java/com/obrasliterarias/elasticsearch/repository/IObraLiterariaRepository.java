@@ -1,6 +1,8 @@
 package com.obrasliterarias.elasticsearch.repository;
 
 import com.obrasliterarias.elasticsearch.entity.ObraLiteraria;
+import org.springframework.data.domain.Limit;
+import org.springframework.data.elasticsearch.annotations.Query;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 import org.springframework.stereotype.Repository;
 
@@ -18,8 +20,11 @@ public interface IObraLiterariaRepository extends ElasticsearchRepository<ObraLi
     List<ObraLiteraria> findAllByNombreContainingIgnoreCase(String nombre);
 
     // Retornar el top 5 de las obras literarias con más cantidad de páginas. Ordenar el resultado de mayor a menor.
+    List<ObraLiteraria> findTop5PagesQuantity();
 
     // Retornar las obras que fueron publicadas antes de un determinado año. Por ejemplo: Antes de 1998.
+    List<ObraLiteraria> findAllByAnioPublicacionBefore(Integer anio);
 
     // Retornar todas las obras de una determinada editorial. Por ejemplo: Todas las obras de la editorial “Santillana”
+    List<ObraLiteraria> findAllByEditorial(String editorial);
 }

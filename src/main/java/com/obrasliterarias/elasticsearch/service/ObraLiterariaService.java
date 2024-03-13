@@ -4,6 +4,7 @@ import com.obrasliterarias.elasticsearch.dto.ObraLiterariaDto;
 import com.obrasliterarias.elasticsearch.entity.ObraLiteraria;
 import com.obrasliterarias.elasticsearch.repository.IObraLiterariaRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Limit;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,5 +39,20 @@ public class ObraLiterariaService implements IObraLiterariaService{
     @Override
     public List<ObraLiterariaDto> findAllByTitleContains(String nombre) {
         return obraLiterariaRepository.findAllByNombreContainingIgnoreCase(nombre).stream().map(obraLiteraria -> mapper.map(obraLiteraria, ObraLiterariaDto.class)).toList();
+    }
+
+    @Override
+    public List<ObraLiterariaDto> findAllByAnioBefore(Integer anio) {
+        return obraLiterariaRepository.findAllByAnioPublicacionBefore(anio).stream().map(obraLiteraria -> mapper.map(obraLiteraria, ObraLiterariaDto.class)).toList();
+    }
+
+    @Override
+    public List<ObraLiterariaDto> findAllByEditorial(String editorial) {
+        return obraLiterariaRepository.findAllByEditorial(editorial).stream().map(obraLiteraria -> mapper.map(obraLiteraria, ObraLiterariaDto.class)).toList();
+    }
+
+    @Override
+    public List<ObraLiterariaDto> findAllByNumPaginasTop5() {
+        return obraLiterariaRepository.findTop5PagesQuantity().stream().map(obraLiteraria -> mapper.map(obraLiteraria, ObraLiterariaDto.class)).toList();
     }
 }
